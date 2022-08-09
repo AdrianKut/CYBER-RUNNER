@@ -18,14 +18,16 @@ public class PlayerManager : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
         GameManager.GameManagerInstance.OnGameOverEvent.AddListener(GameOver);
-
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void GameOver()
@@ -40,19 +42,32 @@ public class PlayerManager : MonoBehaviour
         Destroy(diedEffect, 1f);
     }
 
-
-
     void Update()
+    {
+        Jump();
+    }
+
+    public void JumpOnButton()
+    {
+        if ( isGrounded && GameManager.GameManagerInstance.isGameOver == false)
+        {
+            audioSource.PlayOneShot(audioClip[1]);
+            rb.AddForce(Vector2.up * forceJump, ForceMode2D.Force);
+
+            var jumpEffect = Instantiate(JumpEffect, new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z), Quaternion.Euler(70f, 0, 0));
+            Destroy(jumpEffect, 1f);
+        }
+    }
+
+    public void Jump()
     {
         if (Input.touchCount > 0)
         {
             var touch_1 = Input.GetTouch(0);
-            Debug.Log(touch_1.position);
+           // Debug.Log(touch_1.position);
 
-            if (touch_1.position.x <= 2000 &&
-                touch_1.position.y >= 200 &&
-                touch_1.phase == TouchPhase.Began &&
-                isGrounded &&
+            if (touch_1.position.x <= 450 /*&& touch_1.position.y >= 200 */
+                && touch_1.phase == TouchPhase.Began && isGrounded &&
                 GameManager.GameManagerInstance.isGameOver == false)
             {
                 audioSource.PlayOneShot(audioClip[1]);
@@ -66,22 +81,22 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            animator.SetBool("isJump", false);
-        }
+        GroundDetect(collision, true);
 
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        GroundDetect(collision, false);
+    }
+
+    private void GroundDetect(Collision2D collision, bool isGrounded)
+    {
         if (collision.collider.CompareTag("Ground"))
         {
-            isGrounded = false;
-            animator.SetBool("isJump", true);
+            this.isGrounded = isGrounded;
+            animator.SetBool("isJump", false);
         }
-
     }
 
 

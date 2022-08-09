@@ -24,7 +24,7 @@ public class BonusManager : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    private void OnMouseOver()
+    private void OnMouseDown()
     {
         DestroyOnClick();
     }

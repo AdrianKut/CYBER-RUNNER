@@ -151,7 +151,7 @@ public class SpawnManager : MonoBehaviour
 
     private void ObjectToSpawn(int index)
     {
-        var _ = Instantiate(gameObjectsMonstersToSpawn[index], new Vector3(Random.Range(10.5f, 20.5f),
+        var _ = Instantiate(gameObjectsMonstersToSpawn[index], new Vector3(Random.Range(13.5f, 23.5f),
                         gameObjectsMonstersToSpawn[index].transform.position.y, 0f),
                         gameObjectsMonstersToSpawn[index].transform.rotation);
     }
@@ -167,7 +167,7 @@ public class SpawnManager : MonoBehaviour
             int index = Random.Range(0, gameObjectsObstaclesToSpawn.Length);
             if (!GameManager.GameManagerInstance.isGameOver)
             {
-                var gameObject = Instantiate(gameObjectsObstaclesToSpawn[index], new Vector3(Random.Range(10f, 16f),
+                var gameObject = Instantiate(gameObjectsObstaclesToSpawn[index], new Vector3(Random.Range(13f, 19f),
                     gameObjectsObstaclesToSpawn[index].transform.position.y, 0f),
                     gameObjectsObstaclesToSpawn[index].transform.rotation);
             }
@@ -192,7 +192,7 @@ public class SpawnManager : MonoBehaviour
         {
             spawnDelay = Random.Range(30f, 60f);
             yield return new WaitForSeconds(spawnDelay);
-            var randomPosX = Random.Range(10f, 20f);
+            var randomPosX = Random.Range(13f, 23f);
             var randomPosY = Random.Range(8f, 9f);
 
             Instantiate(gameObjectMoneyBank, new Vector3(randomPosX,randomPosY,0f), Quaternion.identity);
@@ -207,7 +207,7 @@ public class SpawnManager : MonoBehaviour
         {
             spawnDelay = Random.Range(60f, 90f);
             yield return new WaitForSeconds(spawnDelay);
-            var randomPosX = Random.Range(10f, 20f);
+            var randomPosX = Random.Range(13f, 23f);
             var randomPosY = Random.Range(8f, 9f);
 
             Instantiate(gameObjectMysteriousBox, new Vector3(randomPosX, randomPosY, 0f), Quaternion.identity);

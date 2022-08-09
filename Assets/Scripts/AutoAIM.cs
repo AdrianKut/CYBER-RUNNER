@@ -11,30 +11,54 @@ public class AutoAIM : MonoBehaviour
     public GameObject Gun;
     public float Force;
 
-    void Update()
-    {      
-        var gameObjectEnemy = GameObject.FindGameObjectWithTag("EnemyAIM");
-        if (gameObjectEnemy != null)
+    public bool Selected = false;
+
+    public static AutoAIM Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
         {
-            if (Detected == false)
-            {
-                Detected = true;
-            }
-        }
-        else
-        {
-            if (Detected == true)
-            {
-                Detected = false;
-            }
+            Instance = this;
         }
 
-        if (Detected)
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Update()
+    {
+        //var gameObjectEnemy = GameObject.FindGameObjectWithTag("EnemyAIM");
+        //if (gameObjectEnemy != null)
+        //{
+        //    if (Detected == false)
+        //    {
+        //        Detected = true;
+        //    }
+        //}
+        //else
+        //{
+        //    if (Detected == true)
+        //    {
+        //        Detected = false;
+        //    }
+        //}
+
+        //if (Detected)
+        //{
+        //    Vector3 difference = gameObjectEnemy.transform.position - transform.position;
+        //    float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        //    rotationZ = Mathf.Clamp(rotationZ, -20f, 30f);
+        //    Gun.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+        //}
+
+        if (Selected)
         {
-            Vector3 difference = gameObjectEnemy.transform.position - transform.position;
+            Vector3 difference = Target.transform.position - transform.position;
             float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
             rotationZ = Mathf.Clamp(rotationZ, -20f, 30f);
             Gun.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
         }
     }
+
+   
 }

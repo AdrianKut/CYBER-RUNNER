@@ -10,6 +10,7 @@ public class PopUpEffect : MonoBehaviour
     private void OnEnable() => StartCoroutine(PopUp());
 
     private AudioSource audioSource;
+    private bool canRescale = false;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -25,7 +26,6 @@ public class PopUpEffect : MonoBehaviour
         canRescale = true;
     }
 
-    private bool canRescale = false;
     public void ReScale()
     {
         if (canRescale)

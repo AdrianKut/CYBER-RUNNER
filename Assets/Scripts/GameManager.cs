@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -162,9 +164,9 @@ public class GameManager : MonoBehaviour
                 var tempHighScoreNames = new string[5];
                 Array.Copy(HighScoreManager.instance.textNames, tempHighScoreNames, 5);
 
-                for (int j = i+1; j < tempHighScoreNames.Length; j++)
+                for (int j = i + 1; j < tempHighScoreNames.Length; j++)
                 {
-                    HighScoreManager.instance.scores[j] = tempHighscoreResults[j-1];
+                    HighScoreManager.instance.scores[j] = tempHighscoreResults[j - 1];
                     HighScoreManager.instance.textNames[j] = tempHighScoreNames[j - 1];
                 }
 
@@ -256,9 +258,9 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         audioSource.Pause();
-        PlayerGameObject.SetActive(false);
-
+        ShowOrHideEnemies(activate: false);
         PlayerGameObject.transform.GetChild(1).GetComponent<LineRenderer>().enabled = false;
+        PlayerGameObject.SetActive(false);
         isPaused = true;
 
         PauseGameObject.SetActive(true);
@@ -272,11 +274,36 @@ public class GameManager : MonoBehaviour
 
         PlayerGameObject.transform.position = startPosPlayer;
         PlayerGameObject.SetActive(true);
-
+        ShowOrHideEnemies(activate: true);
         isPaused = false;
 
         PauseGameObject.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    private List<GameObject> gameObjectsToHide = new List<GameObject>();
+    private void ShowOrHideEnemies(bool activate)
+    {
+        if (activate == false)
+        {
+            gameObjectsToHide = GameObject.FindGameObjectsWithTag("Enemy").ToList();
+
+            foreach (var enemy in gameObjectsToHide)
+            {
+                enemy.SetActive(activate);
+            }
+        }
+        else if (activate == true)
+        {
+            foreach (var enemy in gameObjectsToHide)
+            {
+                enemy.SetActive(activate);
+            }
+
+            gameObjectsToHide.Clear();
+        }
+
+
     }
 
     public void Exit()

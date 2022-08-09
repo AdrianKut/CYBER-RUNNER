@@ -31,14 +31,20 @@ public class Enemy : MonoBehaviour
     EnemyType enemyType;
 
     public EnemyType GetEnemyType() => enemyType;
+
+    [System.Obsolete]
     private void Awake()
     {
         yPos = transform.position.y;
         audioSource = GetComponent<AudioSource>();
+
+       
     }
 
     private void Update()
     {
+        Debug.Log(this.gameObject.transform.localPosition.y);
+
         Vector3 newPos = new Vector3(transform.position.x - moveSpeed * Time.deltaTime, 4, 0);
         transform.position = new Vector3(newPos.x, yPos, newPos.z);
 
@@ -69,13 +75,14 @@ public class Enemy : MonoBehaviour
                 GameManager.GameManagerInstance.GameOver();
             destroy:
                 audioSource.Play();
-                Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+                Destroy(transform.GetComponent<SpriteRenderer>());
+                Destroy(gameObject.GetComponent<Collider2D>());
 
                 for (int i = 0; i < transform.childCount; i++)
                     Destroy(transform.GetChild(i).gameObject);
 
-                Destroy(transform.GetComponent<SpriteRenderer>());
-                Destroy(gameObject.GetComponent<Collider2D>());
+                Instantiate(deathEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject, 2f);
                 break;
 
