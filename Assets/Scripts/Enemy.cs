@@ -43,8 +43,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(this.gameObject.transform.localPosition.y);
-
         Vector3 newPos = new Vector3(transform.position.x - moveSpeed * Time.deltaTime, 4, 0);
         transform.position = new Vector3(newPos.x, yPos, newPos.z);
 

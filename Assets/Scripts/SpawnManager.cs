@@ -37,6 +37,12 @@ public class SpawnManager : MonoBehaviour
         powerUpManager = PowerUpManager.PowerUpManagerInstance;
         powerUpManager.OnSlowMotionActivated.AddListener(DecreaseSpeedObjects);
         powerUpManager.OnSlowMotionDeactivated.AddListener(IncreaseSpeedObjects);
+        GameManager.GameManagerInstance.OnGameOverEvent.AddListener(StopCoroutines);
+    }
+
+    private void StopCoroutines()
+    {
+        StopAllCoroutines();
     }
 
     private void StartingSpeedOfObjects()

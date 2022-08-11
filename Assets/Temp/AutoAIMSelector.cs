@@ -6,8 +6,7 @@ public class AutoAIMSelector : MonoBehaviour
     [SerializeField]
     private GameObject gameObjectAIMSelector;
 
-    private GameObject gameObjectVisual;
-    private Color gameObjectColor;
+    public void HideSelector() => gameObjectAIMSelector.SetActive(false);
     private void OnEnable()
     {
         gameObjectAIMSelector = gameObject.transform.GetChild(0).gameObject;
@@ -18,36 +17,23 @@ public class AutoAIMSelector : MonoBehaviour
         StartCoroutine(ChangeAutoAIMPosition());
     }
 
-    IEnumerator ChangeAutoAIMPosition()
-    {
-        Debug.LogWarning("NEW TARGET!");
-        AutoAIM.Instance.Target = this.gameObject.transform;
-        AutoAIM.Instance.Selected = true;
-
-        //foreach (var item in gameObjectVisual.transform.GetComponentsInChildren<SpriteRenderer>())
-        //{
-        //    item.color = Color.red;
-        //}
-
-        //yield return new WaitForSeconds(0.1f);
-
-        //foreach (var item in gameObjectVisual.transform.GetComponentsInChildren<SpriteRenderer>())
-        //{
-        //    item.color = gameObjectColor;
-        //}
-
-
-        gameObjectAIMSelector.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        gameObjectAIMSelector.SetActive(false);
-        //var a = Instantiate(gameObjectSelectorPrefab, gameObjectVisual.transform.position, Quaternion.identity);
-        //Destroy(a);
-
-    }
-
-    private void OnDisable()
+    private IEnumerator ChangeAutoAIMPosition()
     {
         AutoAIM.Instance.Selected = false;
+        AutoAIM.Instance.SetNewTarget(this.gameObject.transform);
+
+        gameObjectAIMSelector.SetActive(true);
+        LeanTween.rotateAroundLocal(gameObjectAIMSelector, Vector3.forward, 360, 1.5f).setRepeat(-1);
+        while (AutoAIM.Instance.Selected == true)
+        {
+            LeanTween.alpha(gameObjectAIMSelector, 0.15f, 0.5f).setEase(LeanTweenType.easeOutQuad);
+            LeanTween.alpha(gameObjectAIMSelector, 1.0f, 0.25f).setDelay(0.25f).setEase(LeanTweenType.easeInQuad);
+            yield return new WaitForSeconds(1f);
+        }
         gameObjectAIMSelector.SetActive(false);
+    }
+    private void OnDestroy()
+    {
+        AutoAIM.Instance.Selected = false;
     }
 }
