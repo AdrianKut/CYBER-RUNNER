@@ -16,7 +16,7 @@ public class Nuke : MonoBehaviour
             Instantiate(deathEffect, transform.position, Quaternion.identity);
 
             var objectsToDestroy = GameObject.FindObjectsOfType<Enemy>();
-            objectsToDestroy.ToList().ForEach(obj => obj.GetComponent<Enemy>().Die());
+            objectsToDestroy.ToList().ForEach(obj => obj.GetComponent<Enemy>().Detonate());
 
             Destroy(this.gameObject);
         }

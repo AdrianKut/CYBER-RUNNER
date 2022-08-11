@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private float moveSpeed = 10f;
+
     public void SetSpeed(float speed) => moveSpeed = speed;
     public float GetSeed() => moveSpeed;
 
@@ -28,7 +29,7 @@ public class Enemy : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField]
-    EnemyType enemyType;
+    private EnemyType enemyType;
 
     public EnemyType GetEnemyType() => enemyType;
 
@@ -36,12 +37,15 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         yPos = transform.position.y;
-        audioSource = GetComponent<AudioSource>();
-
-       
+        audioSource = GetComponent<AudioSource>();    
     }
 
     private void Update()
+    {
+        MoveToLeft();
+    }
+
+    private void MoveToLeft()
     {
         Vector3 newPos = new Vector3(transform.position.x - moveSpeed * Time.deltaTime, 4, 0);
         transform.position = new Vector3(newPos.x, yPos, newPos.z);
@@ -57,7 +61,7 @@ public class Enemy : MonoBehaviour
             Die("bullet");
     }
 
-    public void Die() => Die("nuke");
+    public void Detonate() => Die("nuke");
 
     private void Die(string typeOfDeath)
     {
@@ -67,6 +71,7 @@ public class Enemy : MonoBehaviour
             case "bullet":
             case "nuke":
                 GameManager.GameManagerInstance.IncreaseMoney(moneyAmount);
+                Destroy(this.gameObject.GetComponent<AutoAIMSelector>()); 
                 goto destroy;
 
             case "player":
@@ -81,6 +86,7 @@ public class Enemy : MonoBehaviour
                     Destroy(transform.GetChild(i).gameObject);
 
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
+                AutoAIM.Instance.ReleaseAutoAIM(this.gameObject);
                 Destroy(gameObject, 2f);
                 break;
 

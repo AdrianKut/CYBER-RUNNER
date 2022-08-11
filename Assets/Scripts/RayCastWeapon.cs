@@ -13,7 +13,7 @@ public class RayCastWeapon : MonoBehaviour
     private static int damage;
 
     [SerializeField]
-    private float fireRate = 1f;
+    private float FireRate = 1f;
 
     [SerializeField]
     private GameObject impactEffect;
@@ -40,26 +40,26 @@ public class RayCastWeapon : MonoBehaviour
     private GameObject bulletPrefab;
 
     private float timer;
-    private string currentWeapon = "rifle";
+    private string CurrentWeapon = "rifle";
 
-    public string GetNameOfCurrentWeapon() => currentWeapon;
-    public float GetValueOfFireRate() => fireRate;
+    public string GetNameOfCurrentWeapon() => CurrentWeapon;
+    public float GetValueOfFireRate() => FireRate;
 
+    public static int GetCurrentValueOfDamage() => damage;
     public void UseLaser()
     {
         damage = 50;
-        currentWeapon = "laser";
-        fireRate = 0.7f;
+        CurrentWeapon = "laser";
+        FireRate = 0.7f;
     }
 
     public void UseRifle()
     {
         damage = 25;
-        currentWeapon = "rifle";
-        fireRate = 0.9f;
+        CurrentWeapon = "rifle";
+        FireRate = 0.9f;
     }
 
-    public static int GetCurrentValueOfDamage() => damage;
 
     private void Start()
     {
@@ -69,41 +69,22 @@ public class RayCastWeapon : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetButton("Fire1") && timer <= 0 && !GameManager.GameManagerInstance.isGameOver)
-        //{
-        //    if (PowerUpManager.SuperAmmoActivated() == true)
-        //        timer = 0.15f;
-        //    else
-        //        timer = fireRate;
-
-        //    if (currentWeapon == "laser")
-        //        StartCoroutine(LaserShoot());
-        //    else if (currentWeapon == "rifle")
-        //        RifleShoot();
-        //}
-        //else
-        //{
-        //    timer -= Time.deltaTime;
-        //}
-
         if (timer <= 0 && !GameManager.GameManagerInstance.isGameOver)
         {
             if (PowerUpManager.SuperAmmoActivated() == true)
                 timer = 0.15f;
             else
-                timer = fireRate;
+                timer = FireRate;
 
-            if (currentWeapon == "laser")
+            if (CurrentWeapon == "laser")
                 StartCoroutine(LaserShoot());
-            else if (currentWeapon == "rifle")
+            else if (CurrentWeapon == "rifle")
                 RifleShoot();
         }
         else
         {
             timer -= Time.deltaTime;
         }
-
-
     }
 
     private void RifleShoot()
@@ -114,28 +95,8 @@ public class RayCastWeapon : MonoBehaviour
         Destroy(bullet, 2f);
     }
 
-    private void FixedUpdate()
-    {
-        //if (!GameManager.GameManagerInstance.isGameOver)
-        //{
-        //    var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //    var dir = pos - armTransform.position;
-        //    dir.Normalize();
-
-        //    if (transform.eulerAngles.y > 90)
-        //    {
-        //        dir.x *= -1;
-        //    }
-
-        //    float angle = Mathf.RoundToInt(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
-        //    angle = Mathf.Clamp(angle, maxArmRotations.x, maxArmRotations.y);
-        //    armTransform.localRotation = Quaternion.Euler(0f, 0f, angle);
-        //}
-    }
-
     private IEnumerator LaserShoot()
     {
-
         shootAudioSource.PlayOneShot(audioLaserShoot);
         var hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right, 9999, collisionLayerMask);
         GameObject impactGameObject = null;
@@ -149,8 +110,6 @@ public class RayCastWeapon : MonoBehaviour
 
                 if (enemy.name.Contains("MysteriousBox"))
                     GameManager.GameManagerInstance.OnDestroyMysteriousBox?.Invoke();
-
-
 
                 enemy.TakeDamage(damage);
                 impactGameObject = Instantiate(impactEffect, hitInfo.point, Quaternion.identity);

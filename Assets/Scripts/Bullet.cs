@@ -21,8 +21,7 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D hitInfo)
-    {
-        
+    {     
         var enemy = hitInfo.GetComponent<Enemy>();
         if (enemy != null && enemy.GetEnemyType() == EnemyType.Monster)
         {
@@ -30,7 +29,9 @@ public class Bullet : MonoBehaviour
             StartCoroutine(SpawnImpactEffect());
         }
         else
+        {
             StartCoroutine(SpawnImpactEffect());
+        }
     }
 
     private IEnumerator SpawnImpactEffect()
@@ -46,6 +47,5 @@ public class Bullet : MonoBehaviour
         }
 
         Destroy(gameObject);
-
     }
 }

@@ -113,8 +113,9 @@ public class PowerUpManager : MonoBehaviour
             this.gameObject.SetActive(false);
         }
         else
+        {
             this.gameObject.SetActive(true);
-
+        }
     }
 
     private IEnumerator ChangeColorOfButtonToRed(Button thisButton)
