@@ -6,21 +6,21 @@ public class SpawnManager : MonoBehaviour
 {
     [Header("Money Bank")]
     [SerializeField]
-    GameObject gameObjectMoneyBank;
+    private GameObject gameObjectMoneyBank;
 
     [Header("Mysterious Box")]
     [SerializeField]
-    GameObject gameObjectMysteriousBox;
+    private GameObject gameObjectMysteriousBox;
 
     [Header("Obstacles")]
     [SerializeField]
-    GameObject[] gameObjectsObstaclesToSpawn;
+    private GameObject[] gameObjectsObstaclesToSpawn;
 
-    public float spawnObstacleDelay = 2.5f;
+    public float spawnObstacleDelay = 4f;
 
     [Header("Monsters")]
     [SerializeField]
-    GameObject[] gameObjectsMonstersToSpawn;
+    private GameObject[] gameObjectsMonstersToSpawn;
 
     public float spawnMonsterDelay = 2.5f;
 
@@ -168,7 +168,7 @@ public class SpawnManager : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(spawnObstacleDelay, 5f));
+            yield return new WaitForSeconds(Random.Range(spawnObstacleDelay, spawnObstacleDelay * 2));
 
             int index = Random.Range(0, gameObjectsObstaclesToSpawn.Length);
             if (!GameManager.GameManagerInstance.isGameOver)
@@ -198,7 +198,7 @@ public class SpawnManager : MonoBehaviour
         {
             spawnDelay = Random.Range(30f, 60f);
             yield return new WaitForSeconds(spawnDelay);
-            var randomPosX = Random.Range(13f, 23f);
+            var randomPosX = Random.Range(10f, 20f);
             var randomPosY = Random.Range(8f, 9f);
 
             Instantiate(gameObjectMoneyBank, new Vector3(randomPosX,randomPosY,0f), Quaternion.identity);
@@ -213,7 +213,7 @@ public class SpawnManager : MonoBehaviour
         {
             spawnDelay = Random.Range(60f, 90f);
             yield return new WaitForSeconds(spawnDelay);
-            var randomPosX = Random.Range(13f, 23f);
+            var randomPosX = Random.Range(10f, 20f);
             var randomPosY = Random.Range(8f, 9f);
 
             Instantiate(gameObjectMysteriousBox, new Vector3(randomPosX, randomPosY, 0f), Quaternion.identity);
