@@ -26,8 +26,7 @@ public class BigTextOnMiddle : MonoBehaviour
     {
         gameManager = GameManager.GameManagerInstance;
         powerUpManager = PowerUpManager.PowerUpManagerInstance;
-        gameManager.OnHighscore.AddListener(DisplayTextHighScore);
-        gameManager.OnDestroyMoneyPig.AddListener(DisplayTextExtraMoney);
+
         gameManager.OnDestroyMysteriousBox.AddListener(DisplayAndActivateMysteriousEffect);
 
         text = this.gameObject.GetComponent<TextMeshProUGUI>();
@@ -81,31 +80,6 @@ public class BigTextOnMiddle : MonoBehaviour
         }
 
     }
-
-
-    private void DisplayTextHighScore()
-    {
-        text.text = "NEW BEST SCORE!";
-        text.color = Color.yellow;
-        StartCoroutine("Display");
-        audioSource.PlayOneShot(clips[0]);
-    }
-
-
-    private void DisplayTextExtraMoney()
-    {
-        int[] moneys = { 5, 5, 5, 10, 10, 15, 15, 20, 25, 50 };
-        int randomMoneyAmount = Random.Range(0, moneys.Length);
-
-        GameManager.GameManagerInstance.money += moneys[randomMoneyAmount];
-
-        text.text = $"+{moneys[randomMoneyAmount]} $";
-        text.color = Color.green;
-
-        audioSource.PlayOneShot(clips[1]);
-        StartCoroutine("Display");
-    }
-
 
 
     [SerializeField]
