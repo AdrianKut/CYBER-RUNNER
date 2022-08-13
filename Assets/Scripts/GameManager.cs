@@ -327,13 +327,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         OnGameOverEvent?.Invoke();
 
-        //AdsManager.Instance.ShowRewardedAd();
-    }
-
-    public void CompleteRewardedAd()
-    {
-        //TODO
-        Debug.Log("Unity Ads Rewarded Ad Completed");
+        AdsInitializer.Instance.ShowIntersitialAd();
     }
 
     //TO DELETE

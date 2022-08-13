@@ -1,36 +1,35 @@
+using System;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
-public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
+public class AdsInitializer : MonoBehaviour
 {
-    [SerializeField] string _androidGameId;
-    [SerializeField] string _iOSGameId;
-    [SerializeField] bool _testMode = true;
-    private string _gameId;
+    public static AdsInitializer Instance;
 
-    [SerializeField] RewardedAdsButton rewardedAdsButton;
+    public static string gameId = "4878800";
+    public static string intersititalAd = "Interstitial_Android";
 
-    void Awake()
+    private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         InitializeAds();
     }
 
-    public void InitializeAds()
+    private void InitializeAds()
     {
-        _gameId = (Application.platform == RuntimePlatform.IPhonePlayer)
-            ? _iOSGameId
-            : _androidGameId;
-        Advertisement.Initialize(_gameId, _testMode, this);
+        Advertisement.Initialize(gameId,true);
+        Advertisement.Load(intersititalAd);
     }
 
-    public void OnInitializationComplete()
+    public void ShowIntersitialAd()
     {
-        Debug.Log("Unity Ads initialization complete.");
-        rewardedAdsButton.LoadAd();
+        if (Advertisement.IsReady())
+            Advertisement.Show(intersititalAd);
     }
-
-    public void OnInitializationFailed(UnityAdsInitializationError error, string message)
-    {
-        Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
-    }
+   
 }

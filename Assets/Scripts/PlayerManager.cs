@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
             var touch_1 = Input.GetTouch(0);
            // Debug.Log(touch_1.position);
 
-            if (touch_1.position.x <= 450 && touch_1.position.y >= 250
+            if (/*touch_1.position.x <= 450 && */touch_1.position.y >= 250
                 && touch_1.phase == TouchPhase.Began && isGrounded &&
                 GameManager.GameManagerInstance.isGameOver == false)
             {
