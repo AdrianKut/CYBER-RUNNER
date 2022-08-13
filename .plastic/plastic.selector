@@ -1,4 +1,0 @@
-repository "Electro ROG Runner@Games96@cloud"
-  path "/"
-    br "/main"
-    co "/main"
