@@ -2,22 +2,24 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-
-    public float forceJump = 900f;
-    public bool isGrounded = true;
+    [Header("Jump Settings")]
+    [SerializeField] private float forceJump = 900f;
+    [SerializeField] private bool isGrounded = true;
 
     [Header("Audio")]
+    private Animator animator;
     private AudioSource audioSource;
-    public AudioClip[] audioClip;
+    [SerializeField] private AudioClip[] audioClip;
     //0 - died
     //1 - jump
 
-    public GameObject JumpEffect;
-    public GameObject DiedEffect;
+    [Header("VFX Effects")]
+    [SerializeField] private GameObject jumpEffect;
+    [SerializeField] private GameObject diedEffect;
+
+    [SerializeField] private Camera cam;
 
     private Rigidbody2D rb;
-    private Animator animator;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -25,21 +27,14 @@ public class PlayerManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    void Start()
-    {
-        GameManager.GameManagerInstance.OnGameOverEvent.AddListener(GameOver);
+    private void OnEnable()
+    {    
+        GameManager.GameManagerInstance.OnGameOverEvent.AddListener(Death);
     }
 
-    private void GameOver()
+    private void OnDisable()
     {
-        animator.SetBool("isDead", true);
-        audioSource.PlayOneShot(audioClip[0]);
-
-        transform.position = new Vector3(transform.position.x, 2.9f, 0f);
-        var diedEffect = Instantiate(DiedEffect, new Vector3(transform.position.x + 0.485f, transform.position.y - 0.30f, transform.position.z), Quaternion.identity);
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        Destroy(this.gameObject.GetComponent<Collider2D>());
-        Destroy(diedEffect, 1f);
+        GameManager.GameManagerInstance.OnGameOverEvent.RemoveListener(Death);
     }
 
     void Update()
@@ -47,33 +42,23 @@ public class PlayerManager : MonoBehaviour
         Jump();
     }
 
-    public void JumpOnButton()
-    {
-        if ( isGrounded && GameManager.GameManagerInstance.isGameOver == false)
-        {
-            audioSource.PlayOneShot(audioClip[1]);
-            rb.AddForce(Vector2.up * forceJump, ForceMode2D.Force);
-
-            var jumpEffect = Instantiate(JumpEffect, new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z), Quaternion.Euler(70f, 0, 0));
-            Destroy(jumpEffect, 1f);
-        }
-    }
-
     public void Jump()
     {
-        if (Input.touchCount > 0)
+        foreach (Touch touch in Input.touches)
         {
-            var touch_1 = Input.GetTouch(0);
-           // Debug.Log(touch_1.position);
+            Vector3 screenPos = cam.WorldToScreenPoint(this.transform.position);
 
-            if (/*touch_1.position.x <= 450 && */touch_1.position.y >= 250
-                && touch_1.phase == TouchPhase.Began && isGrounded &&
+            if (touch.position.x <= screenPos.x + 100f && touch.position.y >= 250
+                && touch.phase == TouchPhase.Began && isGrounded &&
                 GameManager.GameManagerInstance.isGameOver == false)
             {
                 audioSource.PlayOneShot(audioClip[1]);
                 rb.AddForce(Vector2.up * forceJump, ForceMode2D.Force);
 
-                var jumpEffect = Instantiate(JumpEffect, new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z), Quaternion.Euler(70f, 0, 0));
+                var jumpEffect = Instantiate(this.jumpEffect, new Vector3(transform.position.x,
+                    transform.position.y - 1.5f, transform.position.z),
+                    Quaternion.Euler(70f, 0, 0));
+
                 Destroy(jumpEffect, 1f);
             }
         }
@@ -82,7 +67,6 @@ public class PlayerManager : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GroundDetect(collision, true);
-
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -99,7 +83,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    private void Death()
+    {
+        animator.SetBool("isDead", true);
+        audioSource.PlayOneShot(audioClip[0]);
 
-
-
+        transform.position = new Vector3(transform.position.x, 2.9f, 0f);
+        var diedEffect = Instantiate(this.diedEffect, new Vector3(transform.position.x + 0.485f, transform.position.y - 0.30f, transform.position.z), Quaternion.identity);
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        Destroy(this.gameObject.GetComponent<Collider2D>());
+        Destroy(diedEffect, 1f);
+    }
 }
