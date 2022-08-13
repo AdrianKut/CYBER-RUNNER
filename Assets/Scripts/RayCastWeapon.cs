@@ -3,61 +3,41 @@ using UnityEngine;
 
 public class RayCastWeapon : MonoBehaviour
 {
-    [SerializeField]
-    private Transform armTransform;
+    [SerializeField] private Transform armTransform;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private float fireRate = 1f; 
 
-    [SerializeField]
-    private Transform firePoint;
+    [SerializeField] private GameObject impactEffect;
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private LayerMask collisionLayerMask;
+    [SerializeField] private Vector2 maxArmRotations;
 
-    [SerializeField]
-    private static int damage;
+    [SerializeField] private AudioSource shootAudioSource;
+    [SerializeField] private AudioClip audioLaserShoot;
+    [SerializeField] private AudioClip audioRifleShoot;
 
-    [SerializeField]
-    private float FireRate = 1f;
-
-    [SerializeField]
-    private GameObject impactEffect;
-
-    [SerializeField]
-    private LineRenderer lineRenderer;
-
-    [SerializeField]
-    private LayerMask collisionLayerMask;
-
-    [SerializeField]
-    private Vector2 maxArmRotations;
-
-    [SerializeField]
-    private AudioSource shootAudioSource;
-
-    [SerializeField]
-    private AudioClip audioLaserShoot;
-
-    [SerializeField]
-    private AudioClip audioRifleShoot;
-
-    [SerializeField]
-    private GameObject bulletPrefab;
+    [SerializeField] private GameObject bulletPrefab;
 
     private float timer;
     private string CurrentWeapon = "rifle";
 
     public string GetNameOfCurrentWeapon() => CurrentWeapon;
-    public float GetValueOfFireRate() => FireRate;
+    public float GetValueOfFireRate() => fireRate;
 
-    public static int GetCurrentValueOfDamage() => damage;
+    [SerializeField] private static int Damage;
+    public static int GetCurrentValueOfDamage() => Damage;
     public void UseLaser()
     {
-        damage = 50;
+        Damage = 50;
         CurrentWeapon = "laser";
-        FireRate = 0.7f;
+        fireRate = 0.7f;
     }
 
     public void UseRifle()
     {
-        damage = 25;
+        Damage = 25;
         CurrentWeapon = "rifle";
-        FireRate = 0.9f;
+        fireRate = 0.9f;
     }
 
 
@@ -74,7 +54,7 @@ public class RayCastWeapon : MonoBehaviour
             if (PowerUpManager.SuperAmmoActivated() == true)
                 timer = 0.15f;
             else
-                timer = FireRate;
+                timer = fireRate;
 
             if (CurrentWeapon == "laser")
                 StartCoroutine(LaserShoot());
@@ -105,13 +85,7 @@ public class RayCastWeapon : MonoBehaviour
             var enemy = hitInfo.transform.GetComponent<Enemy>();
             if (enemy != null && enemy.GetEnemyType() == EnemyType.Monster)
             {
-                if (enemy.name.Contains("MoneyBank"))
-                    GameManager.GameManagerInstance.OnDestroyMoneyPig?.Invoke();
-
-                if (enemy.name.Contains("MysteriousBox"))
-                    GameManager.GameManagerInstance.OnDestroyMysteriousBox?.Invoke();
-
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(Damage);
                 impactGameObject = Instantiate(impactEffect, hitInfo.point, Quaternion.identity);
             }
 
@@ -134,7 +108,4 @@ public class RayCastWeapon : MonoBehaviour
             Destroy(impactGameObject);
         }
     }
-
-
-
 }
