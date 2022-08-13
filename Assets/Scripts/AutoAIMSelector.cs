@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AutoAIMSelector : MonoBehaviour
 {
-    [SerializeField]
+
     private GameObject gameObjectAIMSelector;
 
     public void HideSelector() => gameObjectAIMSelector.SetActive(false);
@@ -25,5 +25,6 @@ public class AutoAIMSelector : MonoBehaviour
         LeanTween.alpha(gameObjectAIMSelector, 0f, 0.5f).setEase(LeanTweenType.easeOutQuad);
         yield return new WaitForSeconds(0.5f);
         gameObjectAIMSelector.SetActive(false);
+        
     }
 }

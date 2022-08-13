@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] gameObjectsObstaclesToSpawn;
 
-    public float spawnObstacleDelay = 4f;
+    public float spawnObstacleDelay = 10f;
 
     [Header("Monsters")]
     [SerializeField]
@@ -202,7 +202,6 @@ public class SpawnManager : MonoBehaviour
             var randomPosY = Random.Range(8f, 9f);
 
             Instantiate(gameObjectMoneyBank, new Vector3(randomPosX,randomPosY,0f), Quaternion.identity);
-
         }
     }
 

@@ -6,8 +6,8 @@ public class AdsInitializer : MonoBehaviour
 {
     public static AdsInitializer Instance;
 
-    public static string gameId = "4878800";
-    public static string intersititalAd = "Interstitial_Android";
+    private string gameId = "4878800";
+    private static string intersititalAd = "Interstitial_Android";
 
     private void Awake()
     {

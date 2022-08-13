@@ -5,11 +5,11 @@ public class AutoAIM : MonoBehaviour
     [SerializeField]
     private GameObject Gun;
 
-    public static AutoAIM Instance;
 
     private Transform Target;
     private bool Selected = false;
 
+    public static AutoAIM Instance;
     private void Awake()
     {
         if (Instance == null)

@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     public float currentBestScore;
     public bool isNewHighScore = false;
     public TextMeshProUGUI textBestDistance;
-    public UnityEvent OnHighscore;
 
     [Header("Game Over")]
     public bool isGameOver = false;
@@ -40,7 +39,6 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverObject;
     public TextMeshProUGUI FinalScoreText;
     public TextMeshProUGUI NewHighScoreText;
-    private BigTextOnMiddle bigTextOnMiddle;
 
     public void IncreaseMoney(int moneyAmount) => money += moneyAmount;
     public void BuyPowerUpTypeAndDecreaseMoney(PowerUpType powerUpType) => money -= (int)powerUpType;
@@ -49,8 +47,6 @@ public class GameManager : MonoBehaviour
     public float gameOverDelay = 1.5f;
 
     private AudioSource audioSource;
-
-    public UnityEvent OnDestroyMoneyPig;
     public UnityEvent OnDestroyMysteriousBox;
 
     public static GameManager GameManagerInstance;
@@ -76,13 +72,20 @@ public class GameManager : MonoBehaviour
 
         currentBestScore = HighScoreManager.instance.scores[0];
         UpdateBestScoreText();
-
-        bigTextOnMiddle = GameObject.Find("Big Text On Middle").GetComponent<BigTextOnMiddle>();
     }
 
 
+    //DEBUG
+    [SerializeField] private GameObject GameObjectDebug;
     private void Update()
     {
+        //DEBUG
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            GameObjectDebug.SetActive(true);
+            PlayerGameObject.SetActive(false);
+        }
+
         if (Input.anyKey && isStarted == false)
         {
             isStarted = true;
@@ -135,9 +138,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //Display Big text with reached distance
-        bigTextOnMiddle.DisplayAfterReachDistance((int)distanceCounter);
+        DisplayAfterReachDistance((int)distanceCounter);
+
+
+
     }
+
+
 
     [Header("HIGH SCORE")]
     public GameObject GameObjectInputFieldTextHighScoreName;
@@ -228,9 +235,15 @@ public class GameManager : MonoBehaviour
 
     private void IncreaseMoneyPerSeconds()
     {
-        money += 0.015f;
+        money += 0.02f;
         textMoney.SetText($"{money:F0} $");
     }
+
+
+    //DEBUG TO POJDZIE DO NOWEJ KLASY KTORA BEDZIE ZARZADZALA DYSTANSEM
+    [SerializeField]
+    GameObject GameObjectBigTextPrefab;
+    private List<int> distanceToReachList = new List<int> { 500, 1000, 2500, 5000, 10000, 20000 };
 
     private void UpdateTimerText()
     {
@@ -240,8 +253,52 @@ public class GameManager : MonoBehaviour
         if ((currentBestScore < distanceCounter) && !isNewHighScore)
         {
             isNewHighScore = true;
-            OnHighscore?.Invoke();
+
+            var gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+            gameObject.DisplayText("NEW HIGHSCORE", Color.red, ClipsType.highscore);
         }
+    }
+
+    public void DisplayAfterReachDistance(int distance)
+    {
+        if (distanceToReachList.Contains(distance))
+        {
+            switch (distance)
+            {
+                case 500:
+                    var gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+                    gameObject.DisplayText("GOOD!", Color.yellow, ClipsType.highscore);
+                    goto removeDistance;
+                case 1000:
+                    gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+                    gameObject.DisplayText("WOW!", Color.red, ClipsType.highscore);
+                    goto removeDistance;
+                case 2500:
+                    gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+                    gameObject.DisplayText("AMAZING!", Color.green, ClipsType.highscore);
+                    goto removeDistance;
+                case 5000:
+                    gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+                    gameObject.DisplayText("OUTSTANDING!", Color.blue, ClipsType.highscore);
+                    goto removeDistance;
+                case 10000:
+                    gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+                    gameObject.DisplayText("AWESOME!", Color.magenta, ClipsType.highscore);
+                    goto removeDistance;
+                case 20000:
+                    gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+                    gameObject.DisplayText("CHEATER!", Color.grey, ClipsType.highscore);
+                    goto removeDistance;
+
+
+                removeDistance:
+                    distanceToReachList.Remove(distance);
+                    distanceToReachList.ForEach(x => Debug.Log(x + " "));
+                    break;
+
+            }
+        }
+
     }
 
 
@@ -332,11 +389,6 @@ public class GameManager : MonoBehaviour
 
     //TO DELETE
     #region Debug
-    public void NewHighScoreOnClick()
-    {
-        OnHighscore?.Invoke();
-    }
-
     public void AddMoney()
     {
         money += 50;

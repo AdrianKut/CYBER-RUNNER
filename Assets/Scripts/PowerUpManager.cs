@@ -83,29 +83,6 @@ public class PowerUpManager : MonoBehaviour
         laserDurationAtStart = laserDuration;
     }
 
-    private void Update()
-    {
-        ActivationPowerUpsByKeys();
-    }
-
-    private void ActivationPowerUpsByKeys()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && buttonShield.interactable)
-            BuyShield();
-
-        if (Input.GetKeyDown(KeyCode.Alpha2) && buttonSlowMotion.interactable)
-            BuySlowMotion();
-
-        if (Input.GetKeyDown(KeyCode.Alpha3) && buttonLaser.interactable)
-            BuyLaser();
-
-        if (Input.GetKeyDown(KeyCode.Alpha4) && buttonSuperAmmo.interactable)
-            BuySuperAmmo();
-
-        if (Input.GetKeyDown(KeyCode.Alpha5) && buttonNuke.interactable)
-            BuyNuke();
-    }
-
     private void HidePowerUpsUI()
     {
         if (gameManager.isGameOver || gameManager.isPaused)
@@ -209,8 +186,6 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitForSeconds(timeToRenewShield);
         buttonShield.interactable = true;
     }
-
-
     #endregion
 
     #region SuperAmmo

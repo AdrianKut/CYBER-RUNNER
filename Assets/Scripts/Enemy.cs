@@ -4,7 +4,7 @@ public enum EnemyType
 {
     Monster,
     Obstacle,
-    Platform
+    Bonus
 }
 
 public class Enemy : MonoBehaviour
@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int moneyAmount;
 
-    private float yPos;
     private AudioSource audioSource;
 
     [SerializeField]
@@ -36,19 +35,27 @@ public class Enemy : MonoBehaviour
     [System.Obsolete]
     private void Awake()
     {
-        yPos = transform.position.y;
+
         audioSource = GetComponent<AudioSource>();    
+    }
+
+    private void Start()
+    {
+        if (this.enemyType == EnemyType.Bonus)
+        {
+            LeanTween.moveY(this.gameObject, 6f, 0.8f).setEaseInOutQuad().setLoopPingPong();
+        }
     }
 
     private void Update()
     {
-        MoveToLeft();
+        MoveToLeftBound();
     }
 
-    private void MoveToLeft()
+    private void MoveToLeftBound()
     {
         Vector3 newPos = new Vector3(transform.position.x - moveSpeed * Time.deltaTime, 4, 0);
-        transform.position = new Vector3(newPos.x, yPos, newPos.z);
+        transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
 
         if (newPos.x <= -20f)
             Destroy(this.gameObject);
@@ -61,7 +68,10 @@ public class Enemy : MonoBehaviour
             Die("bullet");
     }
 
-    public void Detonate() => Die("nuke");
+    public void Detonate()
+    {
+        Die("nuke");
+    }
 
     private void Die(string typeOfDeath)
     {
@@ -112,6 +122,33 @@ public class Enemy : MonoBehaviour
 
             else if (other.gameObject.CompareTag("Player") && enemyType == EnemyType.Obstacle)
                 Die("obstacle");
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        DestroyOnClick();
+    }
+
+    [SerializeField]
+    GameObject GameObjectBigTextPrefab;
+    public void DestroyOnClick()
+    {
+        TakeDamage();
+
+        if (this.gameObject.name.Contains("MysteriousBox"))
+        {
+            GameManager.GameManagerInstance.OnDestroyMysteriousBox?.Invoke();
+        }
+        else if (this.gameObject.name.Contains("MoneyBank"))
+        {
+            int[] moneys = { 5, 5, 5, 10, 10, 15, 15, 20, 25, 50 };
+            int randomMoneyAmount = Random.Range(0, moneys.Length);
+
+            GameManager.GameManagerInstance.money += moneys[randomMoneyAmount];
+
+            var gameObject = Instantiate(GameObjectBigTextPrefab, GameObjectBigTextPrefab.transform.position, Quaternion.identity).gameObject.GetComponent<BigTextManager>();
+            gameObject.DisplayText($"+{moneys[randomMoneyAmount]} $", Color.green, ClipsType.money);
         }
     }
 }
