@@ -458,10 +458,9 @@ GameObject:
   - component: {fileID: 5583648385075884012}
   - component: {fileID: 331764992}
   - component: {fileID: 879663797875563611}
-  - component: {fileID: 2378885165005558061}
   m_Layer: 0
   m_Name: MoneyBank
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -584,16 +583,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5583648385075883854}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae776ef7fb190534dbfbb90484a1a9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  moveSpeed: 0
+  moveSpeed: 8
   deathEffect: {fileID: 1755349173569476, guid: 3c45864be6a059a4a82a25e285298338, type: 3}
   moneyAmount: 0
-  enemyType: 0
+  enemyType: 2
+  GameObjectBigTextPrefab: {fileID: 2972696627271804532, guid: d2974d179c6c8b5498a3346af8f65a0a, type: 3}
 --- !u!61 &879663797875563611
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -620,19 +620,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 2}
   m_EdgeRadius: 0
---- !u!114 &2378885165005558061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583648385075883854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 941bef5af00b8fe44a9c806b8bf53d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 8
 --- !u!1 &5583648385075883893
 GameObject:
   m_ObjectHideFlags: 0
