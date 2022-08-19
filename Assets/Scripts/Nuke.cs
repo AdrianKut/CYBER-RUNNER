@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class Nuke : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject deathEffect;
-
+    [SerializeField] private GameObject deathEffect;
     private bool detonateOnce = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -21,5 +19,4 @@ public class Nuke : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
 }

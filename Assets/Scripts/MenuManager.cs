@@ -6,20 +6,12 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-
-    [SerializeField]
-    private GameObject MenuUI;
-
-    [SerializeField]
-    private GameObject HelpUI;
-
-    [SerializeField]
-    private GameObject TopScoreUI;
+    [SerializeField] private GameObject MenuUI;
+    [SerializeField] private GameObject HelpUI;
+    [SerializeField] private GameObject TopScoreUI;
 
     private void Start() => Time.timeScale = 1f;
-
     public void StartGame() => SceneManager.LoadScene("Game Scene");
-
     public void QuitGame() => Application.Quit();
 
     public void OpenHelpUI()

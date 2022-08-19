@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class RotateManager : MonoBehaviour
 {
-    [SerializeField]
-    private float turnSpeed;
-
-    [SerializeField]
-    private Vector3 axis;
+    [SerializeField] private float turnSpeed;
+    [SerializeField] private Vector3 axis;
 
     void Update()
     {

@@ -3,47 +3,44 @@ using UnityEngine;
 
 public class LoopBackground : MonoBehaviour
 {
+    [SerializeField] private float xBound = -47.32f;
+    [SerializeField] private Vector3 startPos;
 
-    [SerializeField]
-    public float xBound = -47.32f;
-
-    [SerializeField]
-    public float speed = 5f;
-
-    [SerializeField]
-    private Vector3 startPos;
-
+    public float Speed { get; set; } = 5f;
+    private float increaseSpeedDelay = 10f;
     private void Awake()
     {
         startPos = transform.position;
-        speed = 5f;
+        Speed = 5f;
 
         StartCoroutine(IncreaseSpeedBackground());
     }
 
-    private float increaseSpeedDelay = 10f;
     private void Update()
     {
-        if (GameManager.GameManagerInstance.isGameOver == false && GameManager.GameManagerInstance.isPaused == false)
+        Move();
+    }
+
+    private void Move()
+    {
+        if (GameManager.Instance.isGameOver == false 
+            && GameManager.Instance.isPaused == false)
         {
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
+            transform.Translate(Vector3.left * Time.deltaTime * Speed);
 
             if (transform.position.x <= xBound)
                 transform.position = startPos;
         }
     }
 
-    
     IEnumerator IncreaseSpeedBackground()
     {
         while (true)
         {        
                 yield return new WaitForSeconds(increaseSpeedDelay);
-                speed += 0.5f;
-                GameManager.GameManagerInstance.distanceMultipier += 0.01f;     
+                Speed += 0.5f;
+                GameManager.Instance.distanceMultipier += 0.01f;     
         }
     }
-
-
 }
 

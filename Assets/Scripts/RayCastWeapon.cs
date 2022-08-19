@@ -40,7 +40,6 @@ public class RayCastWeapon : MonoBehaviour
         fireRate = 0.9f;
     }
 
-
     private void Start()
     {
         UseLaser();
@@ -49,9 +48,9 @@ public class RayCastWeapon : MonoBehaviour
 
     private void Update()
     {
-        if (timer <= 0 && !GameManager.GameManagerInstance.isGameOver)
+        if (timer <= 0 && !GameManager.Instance.isGameOver)
         {
-            if (PowerUpManager.SuperAmmoActivated() == true)
+            if (PowerUpManager.Instance.isSuperAmmoActivated == true)
                 timer = 0.15f;
             else
                 timer = fireRate;

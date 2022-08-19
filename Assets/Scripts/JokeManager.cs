@@ -5,10 +5,8 @@ using System.Linq;
 
 public class JokeManager : MonoBehaviour
 {
-    [SerializeField]
-    TextMeshProUGUI textMeshJoke;
-
-    public static List<string> jokes = new List<string>();
+    [SerializeField] private TextMeshProUGUI textMeshJoke;
+    private List<string> jokes = new List<string>();
     void Start()
     {
         JokesInitialization();
@@ -39,5 +37,4 @@ public class JokeManager : MonoBehaviour
 
         textMeshJoke.text = jokes[randomJoke];
     }
-
 }

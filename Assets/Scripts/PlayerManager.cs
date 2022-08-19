@@ -29,12 +29,12 @@ public class PlayerManager : MonoBehaviour
 
     private void OnEnable()
     {    
-        GameManager.GameManagerInstance.OnGameOverEvent.AddListener(Death);
+        GameManager.Instance.OnGameOverEvent.AddListener(Death);
     }
 
     private void OnDisable()
     {
-        GameManager.GameManagerInstance.OnGameOverEvent.RemoveListener(Death);
+        GameManager.Instance.OnGameOverEvent.RemoveListener(Death);
     }
 
     void Update()
@@ -50,7 +50,7 @@ public class PlayerManager : MonoBehaviour
 
             if (touch.position.x <= screenPos.x + 100f && touch.position.y >= 250
                 && touch.phase == TouchPhase.Began && isGrounded &&
-                GameManager.GameManagerInstance.isGameOver == false)
+                GameManager.Instance.isGameOver == false)
             {
                 audioSource.PlayOneShot(audioClip[1]);
                 rb.AddForce(Vector2.up * forceJump, ForceMode2D.Force);

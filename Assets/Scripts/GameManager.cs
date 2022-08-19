@@ -47,13 +47,12 @@ public class GameManager : MonoBehaviour
     public float gameOverDelay = 1.5f;
 
     private AudioSource audioSource;
-    public UnityEvent OnDestroyMysteriousBox;
 
-    public static GameManager GameManagerInstance;
+    public static GameManager Instance;
     private void Awake()
     {
-        if (GameManagerInstance == null)
-            GameManagerInstance = this;
+        if (Instance == null)
+            Instance = this;
 
         audioSource = GetComponent<AudioSource>();
         startPosPlayer = PlayerGameObject.transform.position;
@@ -70,7 +69,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isStarted = false;
 
-        currentBestScore = HighScoreManager.instance.scores[0];
+        currentBestScore = HighScoreManager.Instance.GetSelectedScoreValue(0);
         UpdateBestScoreText();
     }
 
@@ -161,20 +160,20 @@ public class GameManager : MonoBehaviour
 
     private void CheckYourScoreToLoeaderBoard()
     {
-        for (int i = 0; i < HighScoreManager.instance.scores.Length; i++)
+        for (int i = 0; i < HighScoreManager.Instance.GetScoreLength(); i++)
         {
-            if (distanceCounter > HighScoreManager.instance.scores[i] && isNewScoreOnScoreBoard == false)
+            if (distanceCounter > HighScoreManager.Instance.GetSelectedScoreValue(i) && isNewScoreOnScoreBoard == false)
             {
                 var tempHighscoreResults = new float[5];
-                Array.Copy(HighScoreManager.instance.scores, tempHighscoreResults, 5);
+                Array.Copy(HighScoreManager.Instance.GetScoresArray(), tempHighscoreResults, 5);
 
                 var tempHighScoreNames = new string[5];
-                Array.Copy(HighScoreManager.instance.textNames, tempHighScoreNames, 5);
+                Array.Copy(HighScoreManager.Instance.GetTextNamesArray(), tempHighScoreNames, 5);
 
                 for (int j = i + 1; j < tempHighScoreNames.Length; j++)
                 {
-                    HighScoreManager.instance.scores[j] = tempHighscoreResults[j - 1];
-                    HighScoreManager.instance.textNames[j] = tempHighScoreNames[j - 1];
+                    HighScoreManager.Instance.SetScore(tempHighscoreResults[j - 1], j); 
+                    HighScoreManager.Instance.SetTextName(tempHighScoreNames[j - 1], j);
                 }
 
                 highScoreIndex = i;
@@ -182,8 +181,8 @@ public class GameManager : MonoBehaviour
                 GameObjectInputFieldTextHighScoreName.SetActive(true);
 
 
-                HighScoreManager.instance.scores[i] = distanceCounter;
-                HighScoreManager.instance.Save();
+                HighScoreManager.Instance.SetScore(distanceCounter, i);
+                HighScoreManager.Instance.Save();
                 NewHighScoreText.SetText("NEW HIGH SCORE!");
                 isNewScoreOnScoreBoard = true;
                 break;
@@ -194,11 +193,11 @@ public class GameManager : MonoBehaviour
     public void SaveNewHighScoreTextName()
     {
         if (TextMeshProUGUINickname.text.Length == 1)
-            HighScoreManager.instance.textNames[highScoreIndex] = "ROG RUNNER";
+            HighScoreManager.Instance.SetTextName("ROG RUNNER", highScoreIndex);
         else
-            HighScoreManager.instance.textNames[highScoreIndex] = TextMeshProUGUINickname.text;
+            HighScoreManager.Instance.SetTextName(TextMeshProUGUINickname.text, highScoreIndex);
 
-        HighScoreManager.instance.Save();
+        HighScoreManager.Instance.Save();
 
         GameObjectInputFieldTextHighScoreName.SetActive(false);
         GameObjectButtonSaveNewHighScoreTextName.SetActive(false);
@@ -241,8 +240,7 @@ public class GameManager : MonoBehaviour
 
 
     //DEBUG TO POJDZIE DO NOWEJ KLASY KTORA BEDZIE ZARZADZALA DYSTANSEM
-    [SerializeField]
-    GameObject GameObjectBigTextPrefab;
+    [SerializeField] private GameObject GameObjectBigTextPrefab;
     private List<int> distanceToReachList = new List<int> { 500, 1000, 2500, 5000, 10000, 20000 };
 
     private void UpdateTimerText()
@@ -293,7 +291,6 @@ public class GameManager : MonoBehaviour
 
                 removeDistance:
                     distanceToReachList.Remove(distance);
-                    distanceToReachList.ForEach(x => Debug.Log(x + " "));
                     break;
 
             }

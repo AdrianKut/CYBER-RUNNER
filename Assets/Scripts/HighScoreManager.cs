@@ -8,19 +8,53 @@ using System.Linq;
 
 public class HighScoreManager : MonoBehaviour
 {
-
     private HighScoreManager() { }
-    public static HighScoreManager instance;
+    public static HighScoreManager Instance;
 
-    public string[] textNames = new string[5];
-    public float[] scores = new float[5];
+    [SerializeField] private string[] textNames = new string[5];
+    [SerializeField] private float[] scores = new float[5];
+
+    public string[] GetTextNamesArray()
+    {
+        return textNames;
+    }
+
+    public float[] GetScoresArray()
+    {
+        return scores;
+    }
+
+    public int GetScoreLength()
+    {
+        return scores.Length;
+    }
+
+    public int GetTextNamesLength()
+    {
+        return textNames.Length;
+    }
+
+    public void SetScore(float value, int index)
+    {
+        scores[index] = value;
+    }
+
+    public void SetTextName(string value, int index)
+    {
+        textNames[index] = value;
+    }
+
+    public float GetSelectedScoreValue(int index)
+    {
+        return scores[index];
+    }
 
     private void Awake()
     {
         Load();
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -31,7 +65,6 @@ public class HighScoreManager : MonoBehaviour
         public string[] textNames;
         public float[] scores;
     }
-
 
     public void Save()
     {
@@ -45,7 +78,6 @@ public class HighScoreManager : MonoBehaviour
             bFormatter.Serialize(output, json);
         }
     }
-
 
     public void Load()
     {
@@ -63,28 +95,19 @@ public class HighScoreManager : MonoBehaviour
         }
     }
 
-
     private void OnEnable()
     {
         DisplayBestScores();
     }
 
-    [SerializeField]
-    public GameObject[] gameObjectsTopScore;
-
+    [SerializeField] private GameObject[] gameObjectsTopScore;
     private void DisplayBestScores()
     {
-        HighScoreManager.instance.Load();
-
+        Instance.Load();
         for (int i = 0; i < gameObjectsTopScore.Length; i++)
         {
-            gameObjectsTopScore[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{ HighScoreManager.instance.scores[i]:F0}";
-            gameObjectsTopScore[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "" + HighScoreManager.instance.textNames[i];
+            gameObjectsTopScore[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{ HighScoreManager.Instance.scores[i]:F0}";
+            gameObjectsTopScore[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "" + HighScoreManager.Instance.textNames[i];
         }
     }
-
-
-
-
-
 }
