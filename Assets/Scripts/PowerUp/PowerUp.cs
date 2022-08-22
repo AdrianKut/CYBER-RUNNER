@@ -42,7 +42,7 @@ public class PowerUp : MonoBehaviour
 
     public void BuyPowerUp()
     {
-        if (GameManager.Instance.money >= (int)powerUpType)
+        if (GameManager.Instance.GetMoney() >= (int)powerUpType)
         {
             audioSource.Play();
             GameManager.Instance.BuyPowerUpTypeAndDecreaseMoney(powerUpType);

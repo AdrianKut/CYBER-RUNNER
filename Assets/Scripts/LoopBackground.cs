@@ -39,7 +39,6 @@ public class LoopBackground : MonoBehaviour
         {        
                 yield return new WaitForSeconds(increaseSpeedDelay);
                 Speed += 0.5f;
-                GameManager.Instance.distanceMultipier += 0.01f;     
         }
     }
 }

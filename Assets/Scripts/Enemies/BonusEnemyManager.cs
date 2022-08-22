@@ -66,13 +66,11 @@ public class BonusEnemyManager : MonoBehaviour
     public void DisplayAndActivateMysteriousEffect()
     {
         //3x nothing 3x bad effect 10x powerup
-        //string[] effects = {
-        //    "SHIELD", "LASER", "NUKE", "SLOW MOTION", "SUPER AMMO",
-        //    "SHIELD", "LASER", "NUKE", "SLOW MOTION", "SUPER AMMO",
-        //    "?$#^@$!@S4", "LENS DISTORTION", "MONSTER",
-        //    "NOTHING", "NOTHING", "NOTHING"};
         string[] effects = {
-            "SLOW MOTION"};
+            "SHIELD", "LASER", "NUKE", "SLOW MOTION", "SUPER AMMO",
+            "SHIELD", "LASER", "NUKE", "SLOW MOTION", "SUPER AMMO",
+            "?$#^@$!@S4", "LENS DISTORTION", "MONSTER",
+            "NOTHING", "NOTHING", "NOTHING"};
 
         int randomEffect = Random.Range(0, effects.Length);
         switch (effects[randomEffect])
