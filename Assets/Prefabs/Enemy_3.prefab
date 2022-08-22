@@ -106,9 +106,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4019433074436064255}
-  - component: {fileID: 4019433074436064253}
   - component: {fileID: 2394768646429596502}
   - component: {fileID: 980119138481011972}
+  - component: {fileID: 4019433074436064253}
   - component: {fileID: 709383766419926059}
   m_Layer: 0
   m_Name: Enemy_3
@@ -133,23 +133,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4019433074436064253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4019433074436064251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae776ef7fb190534dbfbb90484a1a9db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 75
-  moveSpeed: 4.25
-  deathEffect: {fileID: 1755349173569476, guid: 3c45864be6a059a4a82a25e285298338, type: 3}
-  moneyAmount: 3
-  enemyType: 0
 --- !u!82 &2394768646429596502
 AudioSource:
   m_ObjectHideFlags: 0
@@ -272,6 +255,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.96378493, y: 0.9754565}
   m_EdgeRadius: 0
+--- !u!114 &4019433074436064253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4019433074436064251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae776ef7fb190534dbfbb90484a1a9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 75
+  moveSpeed: 4.1500006
+  deathEffect: {fileID: 1755349173569476, guid: 3c45864be6a059a4a82a25e285298338, type: 3}
+  moneyAmount: 3
+  enemyType: 0
+  GameObjectBigTextPrefab: {fileID: 0}
 --- !u!114 &709383766419926059
 MonoBehaviour:
   m_ObjectHideFlags: 0
