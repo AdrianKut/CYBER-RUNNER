@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class AutoAIMSelector : MonoBehaviour
 {
-
     private GameObject gameObjectAIMSelector;
-
     public void HideSelector() => gameObjectAIMSelector.SetActive(false);
     private void OnEnable()
     {

@@ -89,7 +89,7 @@ public class SpawnManager : MonoBehaviour
                     _enemy.SetSpeed(_speed * speedValue);
                     break;
 
-                case '\\':
+                case '/':
                     _enemy.SetSpeed(_speed / speedValue);
                     break;
 

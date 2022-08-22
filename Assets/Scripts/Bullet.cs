@@ -3,17 +3,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 20f;
-
-    [SerializeField]
-    private Rigidbody2D rb;
-
-    [SerializeField]
-    private GameObject impactEffect;
+    [SerializeField] private float speed = 20f;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private GameObject impactEffect;
 
     private new Collider2D collider2D;
-
     private void Start()
     {
         rb.velocity = transform.right * speed;

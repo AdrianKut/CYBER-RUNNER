@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class AutoAIM : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject Gun;
-
+    [SerializeField] private GameObject Gun;
 
     private Transform Target;
     private bool Selected = false;
@@ -17,6 +15,7 @@ public class AutoAIM : MonoBehaviour
             Instance = this;
         }
     }
+
     void Update()
     {
         if (Selected)
@@ -49,13 +48,10 @@ public class AutoAIM : MonoBehaviour
 
     public void ReleaseAutoAIM(GameObject gameObject)
     {
-
         if (Target != null && Target.gameObject.name == gameObject.name)
         {
             Selected = false;
             Gun.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
     }
-
-
 }

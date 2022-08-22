@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class DestroyObjectDelay : MonoBehaviour
 {
-    [SerializeField]
-    float destroyDelay;
+    [SerializeField] private float destroyDelay;
 
     private void OnEnable()
     {

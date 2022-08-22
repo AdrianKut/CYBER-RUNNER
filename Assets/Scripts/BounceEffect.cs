@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BounceEffect : MonoBehaviour
 {
-
     private void Start() => Bounce();
     private void OnEnable() => Bounce();
 

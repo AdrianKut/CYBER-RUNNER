@@ -30,6 +30,5 @@ public class AdsInitializer : MonoBehaviour
     {
         if (Advertisement.IsReady())
             Advertisement.Show(intersititalAd);
-    }
-   
+    } 
 }
