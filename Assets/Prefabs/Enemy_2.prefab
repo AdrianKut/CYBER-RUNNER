@@ -277,7 +277,6 @@ MonoBehaviour:
   deathEffect: {fileID: 1755349173569476, guid: 3c45864be6a059a4a82a25e285298338, type: 3}
   moneyAmount: 2
   enemyType: 0
-  GameObjectBigTextPrefab: {fileID: 0}
 --- !u!114 &203074154247393963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c38484d83aee84d8b9b26738e4cc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectAIMSelector: {fileID: 0}
 --- !u!1 &461755013380829726
 GameObject:
   m_ObjectHideFlags: 0
