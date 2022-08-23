@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
     private void IncreaseMoneyPerSeconds()
     {
-        money += 0.02f;
+        money += 0.015f;
         textMoney.SetText($"{money:F0} $");
     }
 
@@ -120,6 +120,6 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         OnGameOverEvent?.Invoke();
 
-        AdsInitializer.Instance.ShowIntersitialAd();
+        //AdsInitializer.Instance.ShowIntersitialAd();
     }
 }

@@ -172,7 +172,7 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            var randomPosX = Random.Range(10f, 20f);
+            var randomPosX = Random.Range(15f, 20f);
             var randomPosY = Random.Range(8f, 9f);
 
             Instantiate(gameObjectToSpawn, new Vector3(randomPosX, randomPosY, 0f), Quaternion.identity);
