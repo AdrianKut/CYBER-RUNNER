@@ -13,8 +13,8 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Games96
-  productName: Electro ROG Runner
-  defaultCursor: {fileID: 2800000, guid: ca853ff5d7ecbec4e8e802605548188b, type: 3}
+  productName: CYBER RUNNER
+  defaultCursor: {fileID: 0}
   cursorHotspot: {x: 25, y: 25}
   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -156,7 +156,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.Games96.ElectroROGRunner
+    Android: com.Games96.CYBERRUNNER
     Standalone: com.DefaultCompany.GranakonkursROG4Creators
   buildNumber:
     Standalone: 0
