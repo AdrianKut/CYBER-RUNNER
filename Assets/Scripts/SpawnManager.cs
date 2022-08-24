@@ -105,19 +105,19 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnMonsterDelay); // 2.5s
-            EnemiesToSpawn(gameObjectsMonsters, 0, 2, 13.5f, 23.5f);
+            EnemiesToSpawn(gameObjectsMonsters, 0, 2, 13.5f, 18.5f);
 
             yield return new WaitForSeconds(spawnMonsterDelay); // 2.5s
-            EnemiesToSpawn(gameObjectsMonsters, 2, 4, 13.5f, 23.5f);
+            EnemiesToSpawn(gameObjectsMonsters, 2, 4, 13.5f, 18.5f);
 
             yield return new WaitForSeconds(spawnMonsterDelay); // 2.5s
-            EnemiesToSpawn(gameObjectsMonsters, 0, 2, 13.5f, 23.5f);
+            EnemiesToSpawn(gameObjectsMonsters, 0, 2, 13.5f, 18.5f);
 
             yield return new WaitForSeconds(spawnMonsterDelay); // 2.5s
-            EnemiesToSpawn(gameObjectsMonsters, 2, gameObjectsMonsters.Length, 13.5f, 23.5f);
+            EnemiesToSpawn(gameObjectsMonsters, 2, gameObjectsMonsters.Length, 13.5f, 18.5f);
 
             yield return new WaitForSeconds(spawnMonsterDelay); // 2.5s
-            EnemiesToSpawn(gameObjectsMonsters, 0, gameObjectsMonsters.Length, 13.5f, 23.5f);
+            EnemiesToSpawn(gameObjectsMonsters, 0, gameObjectsMonsters.Length, 13.5f, 18.5f);
 
             // == 12.5s
             SetSpeedOfGameObjects(gameObjectsMonsters,'+', 0.05f);
@@ -158,7 +158,7 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnMoneyBank()
     {
-        StartCoroutine(BonusToSpawn(gameObjectMoneyBank, 30f, 60f));
+        StartCoroutine(BonusToSpawn(gameObjectMoneyBank, 40f, 60f));
     }
 
     private void SpawnMysteriousBox()

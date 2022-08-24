@@ -8,12 +8,12 @@ using System.Linq;
 
 public class HighScoreManager : MonoBehaviour
 {
-    private HighScoreManager() { }
-    public static HighScoreManager Instance;
 
     [SerializeField] private string[] textNames = new string[5];
     [SerializeField] private float[] scores = new float[5];
 
+    private HighScoreManager() { }
+    public static HighScoreManager Instance;
     public string[] GetTextNamesArray()
     {
         return textNames;

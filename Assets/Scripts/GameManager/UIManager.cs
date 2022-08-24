@@ -34,11 +34,11 @@ public class UIManager : MonoBehaviour
 
     public void Resume()
     {
-        
+        gameManager.audioSource.UnPause();
+        ShowOrHideEnemies(activate: true);
         AskToExitGameObject.SetActive(false);
         gameManager.SetStartPosPlayer();
         gameManager.PlayerActivator(true);
-        ShowOrHideEnemies(activate: true);
         gameManager.isPaused = false;
 
         PauseGameObject.SetActive(false);

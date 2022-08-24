@@ -119,7 +119,5 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         OnGameOverEvent?.Invoke();
-
-        //AdsInitializer.Instance.ShowIntersitialAd();
     }
 }

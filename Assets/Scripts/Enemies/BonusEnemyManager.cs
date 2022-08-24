@@ -29,7 +29,6 @@ public class BonusEnemyManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
     }
 
