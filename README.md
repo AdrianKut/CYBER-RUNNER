@@ -18,7 +18,3 @@ It's my mobile version of game which I did to take part in ROG4Creators competit
 ## :vhs: Video 
 https://user-images.githubusercontent.com/51796886/186466788-7582c60f-0964-4e78-b933-c7de3b10d295.mp4
 ## 
-
-<p align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.Games96.CYBERRUNNER"> <img width="250" src="https://pilot-rc.com/wp-content/uploads/2019/07/Google-Play-Icon.png" alt="Download app"></a>
-</p>
